@@ -179,16 +179,26 @@ paths:
           required: false
           schema:
             type: string
-        - name: filedName
-          in: query
-          required: false
-          schema:
-            type: string
         - name: concessionName
           in: query
           required: false
           schema:
             type: string
+        - name: filedName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: owner
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: hydrocarbons
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/HCtype'
       responses:
         200:
           description: OK
@@ -204,39 +214,13 @@ paths:
             text/html:
               schema:
                 $ref: '#/components/schemas/Error'
-    #Post request
-    post:
-      summary: Daily Report post request
-      tags:
-        - "Daily_Reports"
-      description: create a Daily_Report
-      operationId: createDailyReport
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DailyReportDto'
-      responses:
-        201:
-          description: Daily Report created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DailyReportDto'
-        default:
-          description: error
-          content:
-            text/html:
-              schema:
-                $ref: '#/components/schemas/Error'
   /daily_reports/{id}:
     #GET REQUEST
     get:
-      summary: Daily_Report by id get request
+      summary: Daily Production Report by id get request
       tags:
         - "Daily_Reports"
-      description: find Daily_Report by id
+      description: find Daily Preoduction Report by id
       operationId: findDailyReportById
       parameters:
         - name: id
@@ -260,10 +244,10 @@ paths:
                 $ref: '#/components/schemas/Error'
     #PUT REQUEST
     put:
-      summary: update Daily Report
+      summary: update Daily Production Report
       tags:
         - "Daily_Reports"
-      description: update Daily Report
+      description: update Daily Production Report
       operationId: updateDailyReport
       parameters:
         - name: id
@@ -280,7 +264,7 @@ paths:
               $ref: '#/components/schemas/DailyReportDto'
       responses:
         200:
-          description: Daily Rpeort updated
+          description: User updated
           content:
             application/json:
               schema:
@@ -293,10 +277,10 @@ paths:
                 $ref: '#/components/schemas/Error'
     #DELETE REQUEST
     delete:
-      summary: delete Daily Report
+      summary: delete Daily Production Report
       tags:
         - "Daily_Reports"
-      description: delete Daily Report
+      description: delete Daily Production Report
       operationId: deleteDailyReport
       parameters:
         - name: id
@@ -367,7 +351,7 @@ components:
           items:
             $ref: '#/components/schemas/Role'
 
-    #Daily_Report Response Schema
+    #Daily_Report Schema
     DailyReportDto:
       description: Daily Production Report Dto
       type: object
@@ -377,21 +361,25 @@ components:
           format: uuid
         concessionName:
           type: string
-        fieldName:
-          type: string
         owners:
           type: array
           items:
             type: string
-        producedOil:
+        fieldName:
+          type: string
+        hydrocarbons:
+          type: array
+          items:
+            $ref: '#/components/schemas/HCtype'
+        producedOilBbl:
           type: number
           format: double
-        producedGas:
-            type: number
-            format: double
-        producedCondensate:
-            type: number
-            format: double
+        producedGasMMcf:
+          type: number
+          format: double
+        producedCondensateBbl:
+          type: number
+          format: double
 
     #Enum
     HCtype:
