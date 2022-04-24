@@ -10,7 +10,7 @@ import java.util.UUID;
 @Repository
 public interface UserRepository extends MongoRepository<User, UUID> {
 
-    @Query("{username: ?0}")
+    @Query("{userName: ?0}")
     Optional<User> findByUserName(String userName);
 
 }
