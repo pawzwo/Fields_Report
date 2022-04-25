@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
 import java.util.List;
 
 @Document

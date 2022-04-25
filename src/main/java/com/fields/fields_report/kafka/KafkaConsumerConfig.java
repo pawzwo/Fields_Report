@@ -1,12 +1,12 @@
 package com.fields.fields_report.kafka;
 
-import com.fields.fields_report.domain.reports.DailyProductionReport;
 import com.fields.fields_report.model.DailyReportDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
@@ -16,9 +16,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@PropertySource("classpath:constant.properties")
 public class KafkaConsumerConfig {
 
-//    @Value("${kafka.bootstrap.address}")
+    @Value("${kafka.bootstrap.address}")
     private String bootstrapServer;
 
     @Bean
@@ -28,7 +29,7 @@ public class KafkaConsumerConfig {
         jsonDeserializer.setUseTypeMapperForKey(true);
         jsonDeserializer.addTrustedPackages("*");
         Map<String, Object> props = new HashMap<>();
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9090");
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "daily_report");
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), jsonDeserializer);
     }
