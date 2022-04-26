@@ -1,0 +1,398 @@
+openapi: 3.0.3
+info:
+  title: Fields_Library_out
+  description: External end points
+  version: 1.0.0
+
+paths:
+  /login:
+    post:
+      tags:
+        - "Login"
+      summary: login post
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JwtRequest'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtResponse'
+        default:
+          description: error
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /users:
+    #GET REQUEST
+    get:
+      summary: Users get request
+      tags:
+        - "Users"
+      description: find all Users with/without param
+      operationId: findAllUsers
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserDto'
+        default:
+          description: error
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Error'
+    #Post request
+    post:
+      summary: Users post request
+      tags:
+        - "Users"
+      description: create a User
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        201:
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        default:
+          description: error
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /users/{id}:
+    #GET REQUEST
+    get:
+      summary: User by id get request
+      tags:
+        - "User"
+      description: find User by id
+      operationId: findUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        default:
+          description: error
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Error'
+    #PUT REQUEST
+    put:
+      summary: update User
+      tags:
+        - "User"
+      description: update User
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+      responses:
+        200:
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDto'
+        default:
+          description: error
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Error'
+    #DELETE REQUEST
+    delete:
+      summary: delete User
+      tags:
+        - "User"
+      description: delete User
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: User deleted
+        default:
+          description: error
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /daily_reports:
+    #GET REQUEST
+    get:
+      summary: Daily_report get request
+      tags:
+        - "Daily_Reports"
+      description: find all Daily Production Reports with/without params
+      operationId: findAllReports
+      parameters:
+        - name: companyName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: concessionName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filedName
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: owner
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: hydrocarbons
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/HCtype'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DailyReportDto'
+        default:
+          description: error
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /daily_reports/{id}:
+    #GET REQUEST
+    get:
+      summary: Daily Production Report by id get request
+      tags:
+        - "Daily_Reports"
+      description: find Daily Preoduction Report by id
+      operationId: findDailyReportById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyReportDto'
+        default:
+          description: error
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Error'
+    #PUT REQUEST
+    put:
+      summary: update Daily Production Report
+      tags:
+        - "Daily_Reports"
+      description: update Daily Production Report
+      operationId: updateDailyReport
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DailyReportDto'
+      responses:
+        200:
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DailyReportDto'
+        default:
+          description: error
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Error'
+    #DELETE REQUEST
+    delete:
+      summary: delete Daily Production Report
+      tags:
+        - "Daily_Reports"
+      description: delete Daily Production Report
+      operationId: deleteDailyReport
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        200:
+          description: Daily Report deleted
+        default:
+          description: error
+          content:
+            text/html:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    #Error
+    Error:
+      type: object
+      required:
+        - message
+        - code
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+          minimum: 100
+          maximum: 600
+
+    #Jwt
+    JwtRequest:
+      description: credentials
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+
+    JwtResponse:
+      description: credentials
+      type: object
+      properties:
+        jwtToken:
+          type: string
+
+    #User Response Schema
+    UserDto:
+      description: User Dto
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Role'
+
+    #Daily_Report Schema
+    DailyReportDto:
+      description: Daily Production Report Dto
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        concessionName:
+          type: string
+        owners:
+          type: array
+          items:
+            type: string
+        fieldName:
+          type: string
+        hydrocarbons:
+          type: array
+          items:
+            $ref: '#/components/schemas/HCtype'
+        producedOilBbl:
+          type: number
+          format: double
+        producedGasMMcf:
+          type: number
+          format: double
+        producedCondensateBbl:
+          type: number
+          format: double
+
+    #Enum
+    HCtype:
+      description: type of hydrocarbons
+      type: string
+      enum:
+        - OIL
+        - GAS
+        - CONDENSATE
+
+    Role:
+      description: security role
+      type: string
+      enum:
+        - USER
+        - ADMIN
