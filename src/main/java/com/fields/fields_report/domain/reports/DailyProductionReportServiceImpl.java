@@ -19,7 +19,7 @@ public class DailyProductionReportServiceImpl implements DailyProductionReportSe
 
     private final DailyReportProductionRepository productionRepository;
 
-    private void saveDailyReport(DailyReportDto dailyReportDto) {
+    public void saveDailyReport(DailyReportDto dailyReportDto) {
         DailyProductionReport.DailyProductionReportBuilder reportBuilder = new DailyProductionReport.DailyProductionReportBuilder();
         DailyProductionReport dailyProductionReport = reportBuilder
                 .concessionName(dailyReportDto.getConcessionName())
@@ -60,7 +60,7 @@ public class DailyProductionReportServiceImpl implements DailyProductionReportSe
     @KafkaListener(topics= "Daily_Report",
             groupId = "daily_report",
             containerFactory = "reportKafkaListenerContainerFactory")
-    void listener(DailyReportDto dailyReportDto) {
+    public void listener(DailyReportDto dailyReportDto) {
         saveDailyReport(dailyReportDto);
         log.info(dailyReportDto.toString());
     }

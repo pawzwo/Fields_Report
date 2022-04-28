@@ -3,6 +3,7 @@ package com.fields.fields_report.domain.reports;
 import com.fields.fields_report.domain.ProtoDocument;
 import com.fields.fields_report.model.DailyReportDto;
 import com.fields.fields_report.model.HCtype;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,6 +13,7 @@ import java.util.List;
 @Document
 @Getter
 @Builder
+@AllArgsConstructor
 public class DailyProductionReport extends ProtoDocument {
 
     private String concessionName;
